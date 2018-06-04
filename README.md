@@ -1,10 +1,9 @@
-# sync-Daniel-Phiri
-Go Sync code task   
+# sync-Daniel-Phiri  
 
-Clone repo
+1. Clone repo
 
-run `` npm install ``
+2. run `` npm install ``
 
-run `` node app.js ``
+3. run `` node app.js ``
 
 *Make sure you have node.js installed*
