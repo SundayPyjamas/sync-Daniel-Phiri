@@ -18,7 +18,7 @@
   "homepage": "https://github.com/SundayPyjamas/sync-Daniel-Phiri#readme",
   "dependencies": {
     "aws-sdk": "2.250.1",
-    "chalk": "^2.4.1",
+    "chalk": "2.4.1",
     "chokidar": "2.0.3",
     "commander": "2.15.1",
     "debug": "3.1.0",
