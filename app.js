@@ -1,11 +1,14 @@
 const fs = require('fs');
+const express = require('express');
 const chalk = require('chalk');
+const debug = require('debug')('app');
 const AWS = require('aws-sdk');
 const watch = require('watch');
+const cron = require('node-cron');
 const chokidar = require('chokidar');
 const readline = require('readline');
-const debug = require('debug');
 
+app = express();
 // Initializing console interface with readline
 const rl = readline.createInterface({
     input: process.stdin,
@@ -33,19 +36,22 @@ const s3 = new AWS.S3({
 });
 
 // FDirectory watcher for all platforms, initialization below
-var watcher = chokidar.watch(answer, {
+const watcher = chokidar.watch(`'${answer}'`, {
     ignored: /(^|[\/\\])\../,
     persistent: true
 });
 
-var log = console.log.bind(console);
+const log = console.log.bind(console);
 
 // Array to story paths of changed files 
 var paths = [];
 
+cron.schedule("* * * * *", function() {
+    console.log("Checking dir for new files and uploading to your S3 bucket");
+  
 // Add event listeners.
 watcher
-  .on('add', path => log(`File ${path} has been added`) && paths.push(path))
+  .on('add', path => log(`File ${path} has been added`) && paths.push(path) && console.log('file added'))
   .on('error', error => log(`Watcher error: ${error}`));
 
 // For loop to upload each file changed to an s3 bucket  
@@ -69,3 +75,8 @@ for (i = 0; i < paths.length ; i++) {
     // Uploads file
     uploadFile();
 }
+paths = [];
+
+});
+
+app.listen(4428);
