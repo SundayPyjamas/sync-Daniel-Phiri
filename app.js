@@ -41,7 +41,7 @@ const watcher = chokidar.watch(`'${answer}'`, {
     persistent: true
 });
 
-const log = console.log.bind(console);
+var log = console.log.bind(console);
 
 // Array to story paths of changed files 
 var paths = [];
@@ -51,8 +51,8 @@ cron.schedule("* * * * *", function() {
   
 // Add event listeners.
 watcher
-  .on('add', path => log(`File ${path} has been added`) && paths.push(path) && console.log('file added'))
-  .on('error', error => log(`Watcher error: ${error}`));
+  .on('add', path => console.log(`File ${path} has been added`) && paths.push(path) && console.log('file added'))
+  .on('error', error => console.log(`Watcher error: ${error}`));
 
 // For loop to upload each file changed to an s3 bucket  
 for (i = 0; i < paths.length ; i++) {
